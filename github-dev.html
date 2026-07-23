@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitHub 访问慢？开发者加速方案 2026（含 Claude Code / Codex）</title>
+<meta name="description" content="GitHub 打不开、git clone 超时、Claude Code / Codex 命令行连不上？本文讲清为什么命令行比浏览器更容易失败，以及怎样让整机流量走上稳定线路。">
+<link rel="canonical" href="https://denallim54-alt.github.io/github-dev.html">
+<meta property="og:title" content="GitHub 访问慢？开发者加速方案 2026（含 Claude Code）">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://denallim54-alt.github.io/github-dev.html">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "Article", "headline": "GitHub 访问慢？开发者加速方案 2026（含 Claude Code / Codex）", "inLanguage": "zh-CN", "mainEntityOfPage": "https://denallim54-alt.github.io/github-dev.html", "dateModified": "2026-07-23" }
+</script>
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+  { "@type": "Question", "name": "为什么要覆盖整机流量，而不只是浏览器？", "acceptedAnswer": { "@type": "Answer", "text": "git、npm、pip、Docker、AI 编程工具的请求都不经过浏览器代理，只有系统级加速才能把它们一并覆盖。" } },
+  { "@type": "Question", "name": "会影响访问国内仓库吗？", "acceptedAnswer": { "@type": "Answer", "text": "支持智能分流的客户端可以让国内流量走本地直连、海外流量走加速，两者互不干扰。" } },
+  { "@type": "Question", "name": "开发机长时间挂着稳不稳？", "acceptedAnswer": { "@type": "Answer", "text": "选一个对长连接做过优化、断线能自动重连的客户端，适合一开一整天的开发场景。" } }
+] }
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap"><span class="name">跨境上网指南</span><nav><a href="index.html">对比</a><a href="index.html#guides">教程</a><a href="about.html">关于</a></nav></div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>GitHub 慢、Claude Code 连不上？开发者加速思路</h1>
+    <p class="lead">网页半天打不开、<code>git clone</code> 卡死、<code>raw.githubusercontent.com</code> 拉不动，AI 编程工具在终端里一直超时——这些看起来五花八门，根子其实是同一个：到海外的链路不稳。这篇从开发者的角度理一遍。</p>
+    <p class="updated">最近更新：2026 年 7 月 23 日</p>
+  </section>
+
+  <section>
+    <h2>为什么浏览器能开、命令行却不行</h2>
+    <p>常见的坑是：给浏览器配好了海外访问，网页能开，可一到 <code>git clone</code>、<code>git push</code> 或者启动 Claude Code、Codex 就超时。原因在于命令行、编辑器插件、包管理器发的请求根本不经过浏览器代理。真正管用的做法，是让整台机器的流量都走上稳定线路，而不是只顾浏览器那一个口子。系统级的加速能把浏览器、git、npm、pip、Docker 拉镜像这些请求统一接管，省去逐个工具配代理的麻烦。</p>
+  </section>
+
+  <section>
+    <h2>把环境跑通的顺序</h2>
+    <ol class="steps">
+      <li>连一条延迟低、丢包少的海外线路，等它显示已连接；</li>
+      <li>先在浏览器里打开 github.com 确认正常；</li>
+      <li>在终端跑一次小仓库的 <code>git clone</code> 验证命令行也通了；</li>
+      <li>再启动 Claude Code / Codex 跑个最小示例，端到端确认可用；一旦超时，先换线路，再去怀疑工具本身。</li>
+    </ol>
+    <div class="callout">想要更细的分步操作，可参考 <a href="https://yhfast.top/zh/blog/github-accel-guide/?c=gh-hub" rel="nofollow">GitHub 开发者加速完整方案</a> 与 <a href="https://yhfast.top/zh/blog/claude-code-cn/?c=gh-hub" rel="nofollow">Claude Code / Codex 国内配置指南</a>。</div>
+  </section>
+
+  <section>
+    <h2>典型报错怎么处理</h2>
+    <ul class="steps">
+      <li><strong>超时 / 连接被重置。</strong>八九成是线路问题，换一条负载低、延迟稳的线路先排除。</li>
+      <li><strong>克隆到一半断。</strong>大仓库对稳定性更敏感，换低丢包线路；急用时加 <code>--depth=1</code> 做浅克隆。</li>
+      <li><strong>raw 文件拉不动。</strong><code>raw.githubusercontent.com</code> 与网页走的链路不同，确认整机流量都上了加速。</li>
+      <li><strong>握手 / 证书报错。</strong>先看系统时间对不对，个别是当前线路被限流，换线即可。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>常见问题</h2>
+    <details class="faq"><summary>为什么要覆盖整机流量，而不只是浏览器？</summary><p>git、npm、pip、Docker、AI 编程工具的请求都不经过浏览器代理，只有系统级加速才能把它们一并覆盖。</p></details>
+    <details class="faq"><summary>会影响访问国内仓库吗？</summary><p>支持智能分流的客户端可以让国内流量走本地直连、海外流量走加速，两者互不干扰。</p></details>
+    <details class="faq"><summary>开发机长时间挂着稳不稳？</summary><p>选一个对长连接做过优化、断线能自动重连的客户端，适合一开一整天的开发场景。</p></details>
+  </section>
+
+  <section>
+    <p class="cta-row"><a class="btn" href="https://yhfast.top/zh/download/?c=gh-hub" rel="nofollow">免费试用远航极速</a></p>
+    <p>延伸阅读：<a href="claude.html">Claude 国内使用教程</a> · <a href="index.html">完整加速器对比</a></p>
+  </section>
+</main>
+
+<footer class="site"><div class="wrap"><p>本站由远航极速团队维护 · <a href="about.html">关于本站</a></p></div></footer>
+</body>
+</html>
