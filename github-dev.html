@@ -15,7 +15,7 @@
 </script>
 <script type="application/ld+json">
 { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
-  { "@type": "Question", "name": "为什么要覆盖整机流量，而不只是浏览器？", "acceptedAnswer": { "@type": "Answer", "text": "git、npm、pip、Docker、AI 编程工具的请求都不经过浏览器代理，只有系统级加速才能把它们一并覆盖。" } },
+  { "@type": "Question", "name": "为什么要让整机流量都走加速，而不是只设浏览器？", "acceptedAnswer": { "@type": "Answer", "text": "命令行的 git、包管理器 npm 与 pip、Docker，以及 AI 编程工具，发请求时都绕开浏览器代理；只有系统级加速能一并罩住。" } },
   { "@type": "Question", "name": "会影响访问国内仓库吗？", "acceptedAnswer": { "@type": "Answer", "text": "支持智能分流的客户端可以让国内流量走本地直连、海外流量走加速，两者互不干扰。" } },
   { "@type": "Question", "name": "开发机长时间挂着稳不稳？", "acceptedAnswer": { "@type": "Answer", "text": "选一个对长连接做过优化、断线能自动重连的客户端，适合一开一整天的开发场景。" } }
 ] }
@@ -33,7 +33,7 @@
 
   <section>
     <h2>为什么浏览器能开、命令行却不行</h2>
-    <p>常见的坑是：给浏览器配好了海外访问，网页能开，可一到 <code>git clone</code>、<code>git push</code> 或者启动 Claude Code、Codex 就超时。原因在于命令行、编辑器插件、包管理器发的请求根本不经过浏览器代理。真正管用的做法，是让整台机器的流量都走上稳定线路，而不是只顾浏览器那一个口子。系统级的加速能把浏览器、git、npm、pip、Docker 拉镜像这些请求统一接管，省去逐个工具配代理的麻烦。</p>
+    <p>常见的坑是：给浏览器配好了海外访问，网页能开，可一到 <code>git clone</code>、<code>git push</code> 或者要跑 Claude Code、Codex 时就超时。原因在于命令行、编辑器插件、包管理器发的请求根本不经过浏览器代理。真正管用的做法，是让整台机器的流量都走上稳定线路，而不是只顾浏览器那一个口子。系统级加速会把浏览器之外的请求一起接管——命令行拉代码、npm 与 pip 装依赖、Docker 取镜像都在内，省去逐个工具配代理的麻烦。</p>
   </section>
 
   <section>
@@ -42,7 +42,7 @@
       <li>连一条延迟低、丢包少的海外线路，等它显示已连接；</li>
       <li>先在浏览器里打开 github.com 确认正常；</li>
       <li>在终端跑一次小仓库的 <code>git clone</code> 验证命令行也通了；</li>
-      <li>再启动 Claude Code / Codex 跑个最小示例，端到端确认可用；一旦超时，先换线路，再去怀疑工具本身。</li>
+      <li>再拿 Claude Code / Codex 试一个最小示例，端到端确认可用；一旦超时，先换线路，再去怀疑工具本身。</li>
     </ol>
     <div class="callout">想要更细的分步操作，可参考 <a href="https://yhfast.top/zh/blog/github-accel-guide/?c=gh-hub-github-dev" rel="nofollow">GitHub 开发者加速完整方案</a> 与 <a href="https://yhfast.top/zh/blog/claude-code-cn/?c=gh-hub-github-dev" rel="nofollow">Claude Code / Codex 国内配置指南</a>。</div>
   </section>
@@ -59,7 +59,7 @@
 
   <section>
     <h2>常见问题</h2>
-    <details class="faq"><summary>为什么要覆盖整机流量，而不只是浏览器？</summary><p>git、npm、pip、Docker、AI 编程工具的请求都不经过浏览器代理，只有系统级加速才能把它们一并覆盖。</p></details>
+    <details class="faq"><summary>为什么要让整机流量都走加速，而不是只设浏览器？</summary><p>命令行的 git、包管理器 npm 与 pip、Docker，以及 AI 编程工具，发请求时都绕开浏览器代理；只有系统级加速能一并罩住。</p></details>
     <details class="faq"><summary>会影响访问国内仓库吗？</summary><p>支持智能分流的客户端可以让国内流量走本地直连、海外流量走加速，两者互不干扰。</p></details>
     <details class="faq"><summary>开发机长时间挂着稳不稳？</summary><p>选一个对长连接做过优化、断线能自动重连的客户端，适合一开一整天的开发场景。</p></details>
   </section>
